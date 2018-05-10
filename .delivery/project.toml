@@ -1,7 +1,7 @@
 [local_phases]
 unit = "rspec spec/"
-lint = 'cookstyle'
-syntax = "foodcritic ."
+lint = 'cookstyle --display-cop-names --extra-details'
+syntax = "echo skipping"
 provision = "echo skipping"
 deploy = "echo skipping"
 smoke = "echo skipping"
