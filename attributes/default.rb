@@ -2,7 +2,7 @@ default['minikube']['download_base_url'] = 'https://storage.googleapis.com/minik
 default['minikube']['version'] = 'latest'
 
 if node['platform_family'] == 'windows'
-	default['minikube']['install_prefix'] = 'C:\Program Files'
+  default['minikube']['install_prefix'] = 'C:\Program Files'
 else
-	default['minikube']['install_prefix'] = '/usr/local/bin'
+  default['minikube']['install_prefix'] = '/usr/local/bin'
 end
