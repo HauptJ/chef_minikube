@@ -9,20 +9,12 @@
 command_name = 'minikube'
 platform = 'linux'
 arch = 'amd64'
-extension = ''
 do_install = true
 version = node['minikube']['version'] != 'latest' ? "v#{node['minikube']['version']}" : 'latest'
 
-case node['platform_family'] 
-when 'mac_os_x'
-	platform = 'darwin'
-when 'windows'
-	platform = 'windows'
-	extension = '.exe'
-end
 
 # Check to see if minikube is already installed, and if the version matches.
-cmd = "#{node['minikube']['install_prefix']}#{File::SEPARATOR}#{command_name}#{extension}"
+cmd = "#{node['minikube']['install_prefix']}#{File::SEPARATOR}#{command_name}"
 
 if File.exist?(cmd)
 	log "#{cmd} exists, looking for version: #{version}" do
@@ -51,8 +43,16 @@ if do_install
 		recursive
 	end
 
-	remote_file cmd do
-		source "#{node['minikube']['download_base_url']}/#{version}/#{command_name}-#{platform}-#{arch}#{extension}"
-		mode '0755'
+	remote_file '/usr/local/bin/kubectl' do
+	  source node['minikube']['kubectl_download_url']
+	  mode '0755'
+	  backup false
 	end
+
+	remote_file '/usr/local/bin/minikube' do
+  	source node['minikube']['minikube_download_url']
+  	mode '0755'
+  	backup false
+	end
+
 end
